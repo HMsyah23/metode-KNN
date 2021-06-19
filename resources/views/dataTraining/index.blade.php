@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'SPK RTLH | Calon Penerima')
+@section('title', 'Pisang Krispi Rendi')
 
 @section('content_header')
     <h1>Data Training</h1>
@@ -64,7 +64,7 @@
             </div>
           </div>
         <div class="row mt-1">
-            <div class="col-lg-6">
+            <div class="col-lg-12">
                 <span>Data Mentah</span>
                 <div class="table-responsive">
                     <table class="table table-sm table-hover table-bordered text-nowrap" id="datatable">
@@ -92,10 +92,10 @@
                     </table>
                 </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-12">
                 <div class="table-responsive">
                     <span>Data Yang Telah Diolah</span>
-                    <table class="table table-sm table-hover table-bordered text-nowrap" id="datatable">
+                    <table class="table table-sm table-hover table-bordered text-nowrap" id="datatable2">
                         <thead class="bg-success">
                         <tr>
                             <th></th>
@@ -135,7 +135,7 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <form role="form"  action="{{ route('dataTesting.store') }}" method="POST" enctype="multipart/form-data">
+                                <form role="form"  action="{{ route('dataTraining.train') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="row">
                                         <div class="col-sm-4">
@@ -196,7 +196,7 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-12">
-                                    <form role="form"  action="{{ route('datatrainings.store') }}" method="POST" enctype="multipart/form-data">
+                                    <form role="form"  action="{{ route('dataTrainings.store') }}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         <label for="data_training">Upload Data Training</label>
                                         <div class="input-group">
@@ -224,17 +224,18 @@
 @section('css')
   <link rel="stylesheet" href="/css/admin_custom.css">
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <link rel="stylesheet" href="{{asset('vendor/datatables-bs4/css/dataTables.bootstrap4.css') }}">
+  <link rel="stylesheet" href="{{asset('vendor/datatables/css/dataTables.bootstrap4.css') }}">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css">
 @stop
 
 @section('js')
-    <script src="{{asset('vendor/datatables/jquery.dataTables.js') }}"></script>
+    <script src="{{asset('vendor/datatables/js/jquery.dataTables.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
     <script src="{{asset('vendor/datatables/js/dataTables.bootstrap4.js') }}"></script>
   <script> 
       $ ( function () {
           $('#datatable').DataTable();
+          $('#datatable2').DataTable();
       })
   </script>
   <script type="text/javascript">

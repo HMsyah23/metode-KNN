@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'SPK RTLH | Calon Penerima')
+@section('title', 'Pisang Krispi Rendi')
 
 @section('content_header')
     <h1>Data Training</h1>
@@ -88,7 +88,7 @@
                                 <td>{{$d['cuaca']}}</td>
                                 <td>{{$d['terjual']}}</td>
                                 <td>{{$d['ranking']}}</td>
-                                <td>{{number_format($d['ed'],2)}}</td>
+                                <td>{{number_format($d['ed'],10)}}</td>
                             </tr>
                             @empty
                             @endforelse
@@ -180,7 +180,7 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <form role="form"  action="{{ route('dataTesting.store') }}" method="POST" enctype="multipart/form-data">
+                                <form role="form"  action="{{ route('dataTrainings.store') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="row">
                                         <div class="col-sm-4">
@@ -241,7 +241,7 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-12">
-                                    <form role="form"  action="{{ route('datatrainings.store') }}" method="POST" enctype="multipart/form-data">
+                                    <form role="form"  action="{{ route('dataTrainings.store') }}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         <label for="data_training">Upload Data Training</label>
                                         <div class="input-group">

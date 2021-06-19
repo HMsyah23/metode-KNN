@@ -23,38 +23,38 @@ class DataTrainingController extends Controller
     }
 
     public function hari($d) {
-        if ($d == "Senin") {
+        if ($d == "Senin" || $d == "senin") {
             return 1;
-        } else if ($d == "Selasa") {
+        } else if ($d == "Selasa" || $d == "selasa") {
             return 2;
-        } else if ($d == "Rabu") {
+        } else if ($d == "Rabu" || $d == "rabu") {
+            return 3;
+        } else if ($d == "Kamis" || $d == "kamis") {
             return 4;
-        } else if ($d == "Kamis") {
+        } else if ($d == "Jumat" || $d == "jumat") {
             return 5;
-        } else if ($d == "Jumat") {
-            return 5;
-        } else if ($d == "Sabtu") {
+        } else if ($d == "Sabtu" || $d == "sabtu") {
             return 6;
-        } else if ($d == "Minggu") {
+        } else if ($d == "Minggu" || $d == "minggu") {
             return 7;
         }
     }
 
     public function cuaca($d) {
-        if ($d == "Cerah") {
+        if ($d == "Cerah" || $d == "cerah") {
             return 1;
-        } else if ($d == "Hujan") {
+        } else if ($d == "Hujan" || $d == "hujan") {
             return 2;
         }
     }
 
     public function tanggal($d) {
-        if ((\Carbon\Carbon::parse($d)->format('d') > 0) && (\Carbon\Carbon::parse($d)->format('d') < 11)) {
+        if ((intval(\Carbon\Carbon::parse($d)->format('d')) >= 1) && (intval(\Carbon\Carbon::parse($d)->format('d')) <= 11)) {
             return 1;
         }
-        else if ((\Carbon\Carbon::parse($d)->format('d') > 10) && (\Carbon\Carbon::parse($d)->format('d') < 21)) {
+        else if ((intval(\Carbon\Carbon::parse($d)->format('d')) >= 12) && (intval(\Carbon\Carbon::parse($d)->format('d')) <= 20)) {
             return 2;
-        } else if ((\Carbon\Carbon::parse($d)->format('d') > 20) && (\Carbon\Carbon::parse($d)->format('d') < 32)) {
+        } else if ((intval(\Carbon\Carbon::parse($d)->format('d')) >= 21) && (intval(\Carbon\Carbon::parse($d)->format('d')) <= 32)) {
             return 3;
         }
     }
@@ -94,7 +94,11 @@ class DataTrainingController extends Controller
                  'cuaca' => $this->cuaca($collect->cuaca),
                  'terjual' => $collect->terjual,
                  'ranking' => $this->ranking($collect->terjual),
-                 'ed' => sqrt(pow(($this->tanggal($collect->tanggal)-$angka['tanggal']),2)+pow(($this->hari($collect->hari)-$angka['hari']),2)+pow(($this->cuaca($collect->cuaca)-$angka['cuaca']),2)),
+                 'ed' => 
+                 sqrt(
+                     pow(($this->tanggal($collect->tanggal)-$angka['tanggal']),2)+
+                     pow(($this->hari($collect->hari)-$angka['hari']),2)+
+                     pow(($this->cuaca($collect->cuaca)-$angka['cuaca']),2)),
             ];
         });
     }
@@ -140,12 +144,14 @@ class DataTrainingController extends Controller
         //
     }
 
-    public function dataTesting(Request $r)
+    public function dataTraining(Request $r)
     {
         $this->hasil_knn($r->all());
         $dataS = self::$dataS;
+        // dd($dataS);
         $dataED = $r->all();
         $dataS = collect($dataS)->sortBy('ed')->toArray();
+        // dd($dataS);
         $dataS5 = collect($dataS)->sortBy('ed')->take(5);
         $sedikit = collect($dataS)->sortBy('ed')->take(5)->where('ranking','Sedikit')->count();
         $sedang = collect($dataS)->sortBy('ed')->take(5)->where('ranking','Sedang')->count();

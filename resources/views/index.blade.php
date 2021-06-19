@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'SPK Renovasi Rumah Tidak Layak Huni')
+@section('title', 'Pisang Krispi Rendi')
 
 @section('content_header')
     <h1>Dashboard</h1>
@@ -28,7 +28,21 @@
             <div class="icon">
               <i class="ion ion-ios-people"></i>
             </div>
-            <a href="{{route('datatrainings.index')}}" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{route('dataTrainings.index')}}" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 col-12">
+          <!-- small box -->
+          <div class="small-box bg-primary">
+            <div class="inner">
+              <h3>{{$calon ?? ''}}</h3>
+
+              <p>Data Testing</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-ios-people"></i>
+            </div>
+            <a href="{{route('dataTestings.index')}}" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
