@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'SPK RTLH') }}</title>
+    <title>{{ config('app.name', 'Pisang Krispi Rendi') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -20,10 +20,8 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
-        <main class="py-4">
+    <div class="container">
             @yield('content')
-        </main>
     </div>
 </body>
 </html>

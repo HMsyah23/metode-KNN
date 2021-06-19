@@ -31,12 +31,14 @@ Route::group(['prefix' => 'admin','middleware' => ['auth']], function () {
     Route::get('/laporan/calonpenerima','ReportController@laporanSemuaCalonPenerima')->name('laporan.calonpenerima');
     Route::get('/laporan/calonpenerima/{id}','ReportController@laporanCalonPenerima')->name('laporan.calonpenerima.individu');
     Route::resource('kriterias','KriteriaController');
-    Route::resource('datatrainings','DataTrainingController');
+    Route::resource('dataTrainings','DataTrainingController');
+    Route::resource('dataTestings','DataTestingController');
     Route::resource('akuns','AkunController');
     Route::resource('calonpenerimas','CalonPenerimaController');
     Route::get('/ranking','RankingController@index')->name('ranking');
     Route::get('/ranking/detail','RankingController@detail')->name('ranking.detail');
-    Route::post('/dataTesting','DataTrainingController@dataTesting')->name('dataTesting.store');
+    Route::post('/dataTraining','DataTrainingController@dataTraining')->name('dataTraining.train');
+    Route::get('/penjelasan','HomeController@penjelasan')->name('penjelasan');
 });
 
 
