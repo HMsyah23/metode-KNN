@@ -37,7 +37,7 @@ Route::group(['prefix' => 'admin','middleware' => ['auth']], function () {
     Route::resource('calonpenerimas','CalonPenerimaController');
     Route::get('/ranking','RankingController@index')->name('ranking');
     Route::get('/ranking/detail','RankingController@detail')->name('ranking.detail');
-    Route::post('/dataTraining','DataTrainingController@dataTraining')->name('dataTraining.train');
+    Route::post('/dataTestings/addToTraining/{id}','DataTestingController@addToTraining')->name('dataTestings.addToTraining');
     Route::get('/penjelasan','HomeController@penjelasan')->name('penjelasan');
 });
 

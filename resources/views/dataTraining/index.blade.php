@@ -12,7 +12,7 @@
         <div class="row text-center">
             <h3> <i class="ion ion-android-people"></i> Data Training</h3> 
             <div class="col d-flex justify-content-end">
-                <button class="btn btn-primary rounded-pill" data-toggle="modal" data-target="#testingModal" data-backdrop="static"> <i class="fas fa-plus" style="font-size: 20px;"></i> <b style="font-size: 20px;">Tambah Data Testing </b></button>
+                {{-- <button class="btn btn-primary rounded-pill" data-toggle="modal" data-target="#testingModal" data-backdrop="static"> <i class="fas fa-plus" style="font-size: 20px;"></i> <b style="font-size: 20px;">Tambah Data Testing </b></button> --}}
                 <button class="btn btn-success rounded-pill" data-toggle="modal" data-target="#addModal" data-backdrop="static"> <i class="fas fa-upload" style="font-size: 20px;"></i> <b style="font-size: 20px;">Upload Laporan </b></button>
             </div>
         </div>
@@ -122,67 +122,6 @@
                     </table>
                 </div>
             </div>
-
-            <div class="modal fade" id="testingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                    <div class="modal-content">
-                    <div class="modal-header bg-success">
-                      <h5 class="modal-title" id="exampleModalLabel"> <i class="ion ion-android-person-add"></i> Input Data </h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <form role="form"  action="{{ route('dataTraining.train') }}" method="POST" enctype="multipart/form-data">
-                                    @csrf
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                          <!-- select -->
-                                          <div class="form-group">
-                                            <label>Tanggal</label>
-                                            <select class="form-control" name="tanggal">
-                                              <option value="1">Muda</option>
-                                              <option value="2">Pertengan</option>
-                                              <option value="3">Tua</option>
-                                            </select>
-                                          </div>
-                                        </div>
-                                        <div class="col-sm-4">
-                                          <div class="form-group">
-                                            <label>Hari</label>
-                                            <select class="form-control" name="hari">
-                                              <option value="1">Senin</option>
-                                              <option value="2">Selasa</option>
-                                              <option value="3">Rabu</option>
-                                              <option value="4">Kamis</option>
-                                              <option value="5">Jumat</option>
-                                              <option value="6">Sabtu</option>
-                                              <option value="7">Minggu</option>
-                                            </select>
-                                          </div>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <div class="form-group">
-                                              <label>Cuaca</label>
-                                              <select class="form-control" name="cuaca">
-                                                <option value="1">Cerah</option>
-                                                <option value="2">Hujan</option>
-                                              </select>
-                                            </div>
-                                          </div>
-                                      </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Analisa</button>
-                    </div>
-                </form>
-                </div>
-                </div>
-            </div>
             
             <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -249,78 +188,4 @@
       });
     });
 </script>
-  <script>
-
-$(document).ready( function() {
-        $(document).on('change', '.btn-file :file', function() {
-      var input = $(this),
-        label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-      input.trigger('fileselect', [label]);
-      });
-  
-      $('.btn-file :file').on('fileselect', function(event, label) {
-          
-          var input = $(this).parents('.input-group').find(':text'),
-              log = label;
-          
-          if( input.length ) {
-              input.val(log);
-          } else {
-              if( log ) alert(log);
-          }
-        
-      });
-
-      function readURL(input) {
-          if (input.files && input.files[0]) {
-              var reader = new FileReader();
-              
-              reader.onload = function (e) {
-                  $('#img-upload').attr('src', e.target.result);
-              }
-              
-              reader.readAsDataURL(input.files[0]);
-          }
-      }
-  
-      $("#imgInp").change(function(){
-          readURL(this);
-      }); 
-
-    });
-
-
-
-    var stepper1Node = document.querySelector('#stepper1')
-    var stepper2Node = document.querySelector('#stepper2')
-    var stepper1 = new Stepper(document.querySelector('#stepper1'),{
-      linear: true,
-      animation: true
-    })
-
-    stepper1Node.addEventListener('show.bs-stepper', function (event) {
-      console.warn('show.bs-stepper', event)
-    })
-    stepper1Node.addEventListener('shown.bs-stepper', function (event) {
-      console.warn('shown.bs-stepper', event)
-    })
-
-    var stepper2 = new Stepper(document.querySelector('#stepper2'), {
-      linear: false,
-      animation: true
-    })
-
-    stepper2Node.addEventListener('show.bs-stepper', function (event) {
-      console.warn('show.bs-stepper', event)
-    })
-    stepper2Node.addEventListener('shown.bs-stepper', function (event) {
-      console.warn('shown.bs-stepper', event)
-    })
-
-
-    var stepper3 = new Stepper(document.querySelector('#stepper3'), {
-      animation: true
-    })
-    var stepper4 = new Stepper(document.querySelector('#stepper4'))
-  </script>
 @stop

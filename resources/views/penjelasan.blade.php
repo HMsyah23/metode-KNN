@@ -7,10 +7,12 @@
 @stop
 
 @section('content')
-<div class="card bg-white pl-3 pr-3 pt-3 pb-3">
+<div class="container">
+  <div class="card bg-white pl-3 pr-3 pt-3 pb-3">
     <div class="row text-justify">
         <div class="col">
-            <p>
+          <h3 class="text-strong">Penjelasan Metode K-NN</h3>
+            <p class="text-justify">
               <strong>Algoritma K-Nearest Neighbor (K-NN)</strong> adalah sebuah metode klasifikasi
               terhadap sekumpulan data berdasarkan pembelajaran data yang sudah terklasifikasikan sebelumnya, Termasuk dalam <i>supervised learning</i>
               dimana hasil query instance yang baru, diklasifikasi berdasarkan mayoritas kedekatan jarak dari kategori yang ada dalam K-NN.
@@ -39,6 +41,7 @@
             </p>
         </div>
     </div>
+</div>
 </div>
 @stop
 

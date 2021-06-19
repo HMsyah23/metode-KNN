@@ -17,13 +17,13 @@
         </div>
     </div>
     <div class="row mt-4">
-        <div class="col-lg-3 col-sm-6 col-12">
+        <div class="col-lg-3 col-sm-6 col-12 offset-lg-3">
           <!-- small box -->
           <div class="small-box bg-info">
             <div class="inner">
               <h3>{{$calon ?? ''}}</h3>
 
-              <p>Data Training</p>
+              <h3>Data Training</h3>
             </div>
             <div class="icon">
               <i class="ion ion-ios-people"></i>
@@ -37,7 +37,7 @@
             <div class="inner">
               <h3>{{$calon ?? ''}}</h3>
 
-              <p>Data Testing</p>
+              <h3>Data Testing</h3>
             </div>
             <div class="icon">
               <i class="ion ion-ios-people"></i>
