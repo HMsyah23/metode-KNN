@@ -98,7 +98,7 @@ class DataTrainingController extends Controller
                  sqrt(
                      pow(($this->tanggal($collect->tanggal)-$angka['tanggal']),2)+
                      pow(($this->hari($collect->hari)-$angka['hari']),2)+
-                     pow(($this->cuaca($collect->cuaca)-$angka['cuaca']),2)),
+                     pow(($this->cuaca($collect->cuaca)-$this->cuaca($angka['cuaca'])),2)),
             ];
         });
     }
@@ -121,7 +121,7 @@ class DataTrainingController extends Controller
         DataTraining::truncate();
         Excel::import(new DataTrainingsImport, $r->data_training);
 
-        return redirect()->back()->with('success', 'All good!');
+        return redirect()->back()->with('status', 'Data Training Berhasil Diunggah');
     }
 
     public function show(DataTraining $dataTraining)
@@ -148,10 +148,15 @@ class DataTrainingController extends Controller
     {
         $this->hasil_knn($r->all());
         $dataS = self::$dataS;
-        // dd($dataS);
         $dataED = $r->all();
+        if ($dataED['cuaca'] == "cerah" || $dataED['cuaca'] == "Cerah") {
+            $dataED['cuaca'] = 1;
+        } else {
+            $dataED['cuaca'] = 2;
+        }
+         
         $dataS = collect($dataS)->sortBy('ed')->toArray();
-        // dd($dataS);
+        // dd($dataED);
         $dataS5 = collect($dataS)->sortBy('ed')->take(5);
         $sedikit = collect($dataS)->sortBy('ed')->take(5)->where('ranking','Sedikit')->count();
         $sedang = collect($dataS)->sortBy('ed')->take(5)->where('ranking','Sedang')->count();

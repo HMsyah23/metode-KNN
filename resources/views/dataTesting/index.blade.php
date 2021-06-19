@@ -75,6 +75,7 @@
                             <th> Hari </th>
                             <th> Cuaca </th>
                             <th> Terjual </th>
+                            <th> Aksi </th>
                         </tr>
                         </thead>
                         <tbody>
@@ -82,9 +83,58 @@
                             <tr>
                                 <td><b>{{$loop->iteration}}</b></td>
                                 <td>{{$d->tanggal}}</td>
-                                <td>{{$d->hari}}</td>
-                                <td>{{$d->cuaca}}</td>
+                                <td>{{\Carbon\Carbon::parse($d->tanggal)->isoFormat('dddd')}}</td>
+                                @if ($d->cuaca == 1)
+                                  <td>Cerah</td>
+                                @else
+                                  <td>Hujan</td>  
+                                @endif
                                 <td>{{$d->terjual}}</td>
+                                <td>
+                                  <button class="btn btn-sm btn-primary rounded-rounded" data-toggle="modal" data-target="#addModal-{{$d->id}}" data-backdrop="static"> <i class="fas fa-check"></i> Jadikan Data Training</button>
+                                  <a href="{{route('dataTestings.show',$d->id)}}" class="btn btn-sm btn-info rounded-rounded"> <i class="fas fa-eye"></i> Detail</a>
+                                  <button class="btn btn-sm btn-danger rounded-rounded" data-toggle="modal" data-target="#deleteModal-{{$d->id}}" data-backdrop="static"> <i class="fas fa-trash"></i></button>
+                                  <div class="modal fade" id="addModal-{{$d->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header bg-primary">
+                                          <h5 class="modal-title" id="exampleModalLabel"> <i class="fa fa-trash"></i> Jadikan Data Training ? </h5>
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        </div>
+                                        <div class="modal-footer d-flex justify-content-center">
+                                          <form action="{{ route('dataTestings.addToTraining',$d->id) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-primary"> <i class="fa fa-check"></i> Iya</button>
+                                          </form>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal"> <i class="ion ion-close"></i> Tidak</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal fade" id="deleteModal-{{$d->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header bg-danger">
+                                          <h5 class="modal-title" id="exampleModalLabel"> <i class="fa fa-trash"></i> Yakin menghapus Data ? </h5>
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        </div>
+                                        <div class="modal-footer d-flex justify-content-center">
+                                          <form action="{{ route('dataTestings.destroy',$d->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger"> <i class="fa fa-check"></i> Iya</button>
+                                          </form>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal"> <i class="ion ion-close"></i> Tidak</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
+                                </td>
                             </tr>
                             @empty
                             @endforelse
@@ -189,90 +239,5 @@
       $ ( function () {
           $('#datatable').DataTable();
       })
-  </script>
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $(".btn-success").click(function(){ 
-          var html = $(".clone").html();
-          $(".increment").after(html);
-      });
-      $("body").on("click",".btn-danger",function(){ 
-          $(this).parents(".control-group").remove();
-      });
-    });
-</script>
-  <script>
-
-$(document).ready( function() {
-        $(document).on('change', '.btn-file :file', function() {
-      var input = $(this),
-        label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-      input.trigger('fileselect', [label]);
-      });
-  
-      $('.btn-file :file').on('fileselect', function(event, label) {
-          
-          var input = $(this).parents('.input-group').find(':text'),
-              log = label;
-          
-          if( input.length ) {
-              input.val(log);
-          } else {
-              if( log ) alert(log);
-          }
-        
-      });
-
-      function readURL(input) {
-          if (input.files && input.files[0]) {
-              var reader = new FileReader();
-              
-              reader.onload = function (e) {
-                  $('#img-upload').attr('src', e.target.result);
-              }
-              
-              reader.readAsDataURL(input.files[0]);
-          }
-      }
-  
-      $("#imgInp").change(function(){
-          readURL(this);
-      }); 
-
-    });
-
-
-
-    var stepper1Node = document.querySelector('#stepper1')
-    var stepper2Node = document.querySelector('#stepper2')
-    var stepper1 = new Stepper(document.querySelector('#stepper1'),{
-      linear: true,
-      animation: true
-    })
-
-    stepper1Node.addEventListener('show.bs-stepper', function (event) {
-      console.warn('show.bs-stepper', event)
-    })
-    stepper1Node.addEventListener('shown.bs-stepper', function (event) {
-      console.warn('shown.bs-stepper', event)
-    })
-
-    var stepper2 = new Stepper(document.querySelector('#stepper2'), {
-      linear: false,
-      animation: true
-    })
-
-    stepper2Node.addEventListener('show.bs-stepper', function (event) {
-      console.warn('show.bs-stepper', event)
-    })
-    stepper2Node.addEventListener('shown.bs-stepper', function (event) {
-      console.warn('shown.bs-stepper', event)
-    })
-
-
-    var stepper3 = new Stepper(document.querySelector('#stepper3'), {
-      animation: true
-    })
-    var stepper4 = new Stepper(document.querySelector('#stepper4'))
   </script>
 @stop

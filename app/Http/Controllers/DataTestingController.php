@@ -21,38 +21,38 @@ class DataTestingController extends Controller
     }
 
     public function hari($d) {
-        if ($d == "Senin") {
+        if ($d == "Senin" || $d == "senin") {
             return 1;
-        } else if ($d == "Selasa") {
+        } else if ($d == "Selasa" || $d == "selasa") {
             return 2;
-        } else if ($d == "Rabu") {
+        } else if ($d == "Rabu" || $d == "rabu") {
+            return 3;
+        } else if ($d == "Kamis" || $d == "kamis") {
             return 4;
-        } else if ($d == "Kamis") {
+        } else if ($d == "Jumat" || $d == "jumat") {
             return 5;
-        } else if ($d == "Jumat") {
-            return 5;
-        } else if ($d == "Sabtu") {
+        } else if ($d == "Sabtu" || $d == "sabtu") {
             return 6;
-        } else if ($d == "Minggu") {
+        } else if ($d == "Minggu" || $d == "minggu") {
             return 7;
         }
     }
 
     public function cuaca($d) {
-        if ($d == "Cerah") {
+        if ($d == "Cerah" || $d == "cerah") {
             return 1;
-        } else if ($d == "Hujan") {
+        } else if ($d == "Hujan" || $d == "hujan") {
             return 2;
         }
     }
 
     public function tanggal($d) {
-        if ((\Carbon\Carbon::parse($d)->format('d') > 0) && (\Carbon\Carbon::parse($d)->format('d') <= 10)) {
+        if ((intval(\Carbon\Carbon::parse($d)->format('d')) >= 1) && (intval(\Carbon\Carbon::parse($d)->format('d')) <= 11)) {
             return 1;
         }
-        else if ((\Carbon\Carbon::parse($d)->format('d') > 10) && (\Carbon\Carbon::parse($d)->format('d') <= 20)) {
+        else if ((intval(\Carbon\Carbon::parse($d)->format('d')) >= 12) && (intval(\Carbon\Carbon::parse($d)->format('d')) <= 20)) {
             return 2;
-        } else if ((\Carbon\Carbon::parse($d)->format('d') > 20) && (\Carbon\Carbon::parse($d)->format('d') < 32)) {
+        } else if ((intval(\Carbon\Carbon::parse($d)->format('d')) >= 21) && (intval(\Carbon\Carbon::parse($d)->format('d')) <= 32)) {
             return 3;
         }
     }
@@ -87,12 +87,16 @@ class DataTestingController extends Controller
         self::$dataS = collect(self::$dataTrainings)->map(function($dataTrainings, $key) use ($dataTraining,$angka) {
             $collect = (object)$dataTrainings;
             return [
-                 'tanggal' => $this->tanggal($collect->tanggal),
-                 'hari' => $this->hari($collect->hari),
-                 'cuaca' => $this->cuaca($collect->cuaca),
+                 'tanggal' => $collect->tanggal,
+                 'hari' => $collect->hari,
+                 'cuaca' => $collect->cuaca,
                  'terjual' => $collect->terjual,
                  'ranking' => $this->ranking($collect->terjual),
-                 'ed' => sqrt(pow(($this->tanggal($collect->tanggal)-$angka['tanggal']),2)+pow(($this->hari($collect->hari)-$angka['hari']),2)+pow(($this->cuaca($collect->cuaca)-$angka['cuaca']),2)),
+                 'ed' => 
+                 sqrt(
+                     pow(($this->tanggal($collect->tanggal)-$this->tanggal($angka['tanggal'])),2)+
+                     pow(($this->hari($collect->hari)-$angka['hari']),2)+
+                     pow(($this->cuaca($collect->cuaca)-$angka['cuaca']),2)),
             ];
         });
     }
@@ -107,17 +111,87 @@ class DataTestingController extends Controller
 
     public function store(Request $r)
     {
-        // dd($r->tanggal);
-
-        $hari = \Carbon\Carbon::parse($r->tanggal)->isoFormat('dddd');
         
         $dataTesting = DataTesting::create([
             'tanggal' => $r->input('tanggal'),
-            'cuaca' => $r->input('nama'),
+            'cuaca' => $r->input('cuaca'),
         ]);
 
-        // dd($dataTesting);
+        $dataTesting->hari = $this->hari(\Carbon\Carbon::parse($dataTesting->tanggal)->isoFormat('dddd'));
 
-        return redirect()->back();
+        $this->hasil_knn($dataTesting);
+        $dataS = self::$dataS;
+        
+        
+        $dataS = collect($dataS)->sortBy('ed')->toArray();
+        // dd($dataED);
+        $dataS5 = collect($dataS)->sortBy('ed')->take(5);
+        $sedikit = collect($dataS)->sortBy('ed')->take(5)->where('ranking','Sedikit')->count();
+        $sedang = collect($dataS)->sortBy('ed')->take(5)->where('ranking','Sedang')->count();
+        $banyak = collect($dataS)->sortBy('ed')->take(5)->where('ranking','Banyak')->count();
+        $dT = collect($dataS)->sortBy('ed')->take(5)->first();
+        $dataTesting->update([
+            'terjual' => $dT['terjual'],
+        ]);
+
+        $dataED = $dataTesting;
+
+        $dataED->tanggal = $this->tanggal($dataED->tanggal);
+
+        return view('dataTesting.show',compact('dataS','dataS5','dataED','dT','sedikit','sedang','banyak'));
+    }
+
+    public function destroy($id){
+        $dataTesting = DataTesting::find($id);
+        DataTesting::destroy($dataTesting->id);
+        return redirect()->route('dataTestings.index')->with('status', 'Data berhasil dihapus!');
+    }
+
+    public function addToTraining($id){
+        $dataTesting = DataTesting::find($id);
+
+        if ($dataTesting->cuaca == 1) {
+            $cuaca = "cerah";
+        } else {
+            $cuaca = "hujan"; 
+        }
+        
+
+        DataTraining::create([
+            'tanggal' => $dataTesting->tanggal,
+            'hari'    => \Carbon\Carbon::parse($dataTesting->tanggal)->isoFormat('dddd'),
+            'cuaca'   => $cuaca,
+            'terjual' => $dataTesting->terjual,
+        ]);
+
+        DataTesting::destroy($id);
+
+        return redirect()->route('dataTestings.index')->with('status', 'Data berhasil Dipindahkan Menjadi Data Training!');
+    }
+
+    public function show($id)
+    {
+        
+        $dataTesting = DataTesting::find($id);
+
+        $dataTesting->hari = $this->hari(\Carbon\Carbon::parse($dataTesting->tanggal)->isoFormat('dddd'));
+
+        $this->hasil_knn($dataTesting);
+        $dataS = self::$dataS;
+        
+        
+        $dataS = collect($dataS)->sortBy('ed')->toArray();
+        // dd($dataED);
+        $dataS5 = collect($dataS)->sortBy('ed')->take(5);
+        $sedikit = collect($dataS)->sortBy('ed')->take(5)->where('ranking','Sedikit')->count();
+        $sedang = collect($dataS)->sortBy('ed')->take(5)->where('ranking','Sedang')->count();
+        $banyak = collect($dataS)->sortBy('ed')->take(5)->where('ranking','Banyak')->count();
+        $dT = collect($dataS)->sortBy('ed')->take(5)->first();
+
+        $dataED = $dataTesting;
+
+        $dataED->tanggal = $this->tanggal($dataED->tanggal);
+
+        return view('dataTesting.show',compact('dataS','dataS5','dataED','dT','sedikit','sedang','banyak'));
     }
 }
