@@ -88,7 +88,7 @@
                                 <td>{{$d['cuaca']}}</td>
                                 <td>{{$d['terjual']}}</td>
                                 <td>{{$d['ranking']}}</td>
-                                <td>{{number_format($d['ed'],10)}}</td>
+                                <td>{{number_format($d['ed'],2)}}</td>
                             </tr>
                             @empty
                             @endforelse
