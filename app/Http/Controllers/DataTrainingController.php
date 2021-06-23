@@ -139,31 +139,11 @@ class DataTrainingController extends Controller
         //
     }
 
-    public function destroy(DataTraining $dataTraining)
+    public function destroy($id)
     {
-        //
-    }
-
-    public function dataTraining(Request $r)
-    {
-        $this->hasil_knn($r->all());
-        $dataS = self::$dataS;
-        $dataED = $r->all();
-        if ($dataED['cuaca'] == "cerah" || $dataED['cuaca'] == "Cerah") {
-            $dataED['cuaca'] = 1;
-        } else {
-            $dataED['cuaca'] = 2;
-        }
-         
-        $dataS = collect($dataS)->sortBy('ed')->toArray();
-        // dd($dataED);
-        $dataS5 = collect($dataS)->sortBy('ed')->take(5);
-        $sedikit = collect($dataS)->sortBy('ed')->take(5)->where('ranking','Sedikit')->count();
-        $sedang = collect($dataS)->sortBy('ed')->take(5)->where('ranking','Sedang')->count();
-        $banyak = collect($dataS)->sortBy('ed')->take(5)->where('ranking','Banyak')->count();
-        $dT = collect($dataS)->sortBy('ed')->take(5)->first();
-        return view('dataTraining.ed',compact('dataS','dataS5','dataED','dT','sedikit','sedang','banyak'));
-
+        $dataTesting = DataTraining::find($id);
+        DataTraining::destroy($dataTesting->id);
+        return redirect()->route('dataTrainings.index')->with('status', 'Data berhasil dihapus!');
     }
 
 }

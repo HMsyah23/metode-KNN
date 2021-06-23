@@ -3,14 +3,14 @@
 @section('title', 'Pisang Krispi Rendi')
 
 @section('content_header')
-    <h1>Data Training</h1>
+    <h1>Hasil Pengujian Algoritma K-NN</h1>
 @stop
 
 @section('content')
 <div class="card bg-white pl-3 pr-3 pt-3 pb-3">
     <div class="card-body">
         <div class="row text-center">
-            <h3> <i class="ion ion-android-people"></i> Data Training</h3> 
+            <h3> <i class="ion ion-android-people"></i> Hasil Pengujian Algoritma K-NN</h3> 
             <div class="col d-flex justify-content-end">
                 <a class="btn btn-primary rounded-pill" href="{{route('dataTestings.index')}}"> <i class="fas fa-arrow-left" style="font-size: 20px;"></i> <b style="font-size: 20px;">Kembali </b></a>
                 {{-- <button class="btn btn-success rounded-pill" data-toggle="modal" data-target="#addModal" data-backdrop="static"> <i class="fas fa-upload" style="font-size: 20px;"></i> <b style="font-size: 20px;">Upload Laporan </b></button> --}}
@@ -88,7 +88,7 @@
                                 <td>{{$d['cuaca']}}</td>
                                 <td>{{$d['terjual']}}</td>
                                 <td>{{$d['ranking']}}</td>
-                                <td>{{number_format($d['ed'],10)}}</td>
+                                <td>{{number_format($d['ed'],2)}}</td>
                             </tr>
                             @empty
                             @endforelse

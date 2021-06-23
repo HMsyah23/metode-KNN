@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTesting,App\DataTraining,App\Barang,App\Imports\DataTrainingsImport;
+use App\DataTesting,App\DataTraining,App\DataSementara,App\Barang,App\Imports\DataTrainingsImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 
@@ -47,10 +47,10 @@ class DataTestingController extends Controller
     }
 
     public function tanggal($d) {
-        if ((intval(\Carbon\Carbon::parse($d)->format('d')) >= 1) && (intval(\Carbon\Carbon::parse($d)->format('d')) <= 11)) {
+        if ((intval(\Carbon\Carbon::parse($d)->format('d')) >= 1) && (intval(\Carbon\Carbon::parse($d)->format('d')) <= 10)) {
             return 1;
         }
-        else if ((intval(\Carbon\Carbon::parse($d)->format('d')) >= 12) && (intval(\Carbon\Carbon::parse($d)->format('d')) <= 20)) {
+        else if ((intval(\Carbon\Carbon::parse($d)->format('d')) >= 11) && (intval(\Carbon\Carbon::parse($d)->format('d')) <= 20)) {
             return 2;
         } else if ((intval(\Carbon\Carbon::parse($d)->format('d')) >= 21) && (intval(\Carbon\Carbon::parse($d)->format('d')) <= 32)) {
             return 3;
@@ -123,7 +123,8 @@ class DataTestingController extends Controller
         $dataS = self::$dataS;
         
         
-        $dataS = collect($dataS)->sortBy('ed')->toArray();
+        $dataS = collect($dataS)->sortBy('ed',SORT_NUMERIC)->toArray();
+
         // dd($dataED);
         $dataS5 = collect($dataS)->sortBy('ed')->take(5);
         $sedikit = collect($dataS)->sortBy('ed')->take(5)->where('ranking','Sedikit')->count();
@@ -180,7 +181,8 @@ class DataTestingController extends Controller
         $dataS = self::$dataS;
         
         
-        $dataS = collect($dataS)->sortBy('ed')->toArray();
+        // $dataS = collect($dataS)->sortBy('ed')->toArray();
+        $dataS = collect($dataS)->sortBy('ed',SORT_NUMERIC)->toArray();
         // dd($dataED);
         $dataS5 = collect($dataS)->sortBy('ed')->take(5);
         $sedikit = collect($dataS)->sortBy('ed')->take(5)->where('ranking','Sedikit')->count();

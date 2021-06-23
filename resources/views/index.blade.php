@@ -23,7 +23,7 @@
             <div class="inner">
               <h3>{{$calon ?? ''}}</h3>
 
-              <h3>Data Training</h3>
+              <h3>Data Training <sup class="badge badge-warning badge-sm">{{count($training)}}</sup></h3>
             </div>
             <div class="icon">
               <i class="ion ion-ios-people"></i>
@@ -37,7 +37,7 @@
             <div class="inner">
               <h3>{{$calon ?? ''}}</h3>
 
-              <h3>Data Testing</h3>
+              <h3>Data Testing <sup class="badge badge-warning badge-sm">{{count($testing)}}</sup></h3>
             </div>
             <div class="icon">
               <i class="ion ion-ios-people"></i>

@@ -3,14 +3,14 @@
 @section('title', 'Pisang Krispi Rendi')
 
 @section('content_header')
-    <h1>Data Training</h1>
+    <h1>Data Training <span class="badge badge-primary">{{count($dataT)}}</span></h1>
 @stop
 
 @section('content')
 <div class="card bg-white pl-3 pr-3 pt-3 pb-3">
     <div class="card-body">
         <div class="row text-center">
-            <h3> <i class="ion ion-android-people"></i> Data Training</h3> 
+            <h3> <i class="ion ion-android-people"></i> Data Training <sup class="badge badge-primary">{{count($dataT)}}</sup></h3> 
             <div class="col d-flex justify-content-end">
                 {{-- <button class="btn btn-primary rounded-pill" data-toggle="modal" data-target="#testingModal" data-backdrop="static"> <i class="fas fa-plus" style="font-size: 20px;"></i> <b style="font-size: 20px;">Tambah Data Testing </b></button> --}}
                 <button class="btn btn-success rounded-pill" data-toggle="modal" data-target="#addModal" data-backdrop="static"> <i class="fas fa-upload" style="font-size: 20px;"></i> <b style="font-size: 20px;">Upload Laporan </b></button>
@@ -70,11 +70,12 @@
                     <table class="table table-sm table-hover table-bordered text-nowrap" id="datatable">
                         <thead class="bg-success">
                         <tr>
-                            <th></th>
+                            <th>No</th>
                             <th> Tanggal </th>
                             <th> Hari </th>
                             <th> Cuaca </th>
                             <th> Terjual </th>
+                            <th> Aksi </th>
                         </tr>
                         </thead>
                         <tbody>
@@ -85,6 +86,29 @@
                                 <td>{{$d->hari}}</td>
                                 <td>{{$d->cuaca}}</td>
                                 <td>{{$d->terjual}}</td>
+                                <td>
+                                   <button class="btn btn-sm btn-danger rounded-rounded" data-toggle="modal" data-target="#deleteModal-{{$d->id}}" data-backdrop="static"> <i class="fas fa-trash"></i></button>
+                                   <div class="modal fade" id="deleteModal-{{$d->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header bg-danger">
+                                          <h5 class="modal-title" id="exampleModalLabel"> <i class="fa fa-trash"></i> Yakin menghapus Data ? </h5>
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        </div>
+                                        <div class="modal-footer d-flex justify-content-center">
+                                          <form action="{{ route('dataTrainings.destroy',$d->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger"> <i class="fa fa-check"></i> Iya</button>
+                                          </form>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal"> <i class="ion ion-close"></i> Tidak</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    </div>
+                                </td>
                             </tr>
                             @empty
                             @endforelse
