@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 19, 2021 at 08:11 PM
+-- Generation Time: Jun 23, 2021 at 07:22 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.10
 
@@ -40,7 +40,11 @@ CREATE TABLE `data_testings` (
 --
 
 INSERT INTO `data_testings` (`id`, `tanggal`, `hari`, `cuaca`, `terjual`) VALUES
-(57, '2021-06-22', '2', '2', 16);
+(57, '2021-06-22', '2', '2', 16),
+(60, '2021-06-10', '4', '2', 19),
+(61, '2021-06-14', '1', '2', 27),
+(66, '2021-06-15', '2', '2', 7),
+(76, '2021-06-22', '2', '2', 15);
 
 -- --------------------------------------------------------
 
@@ -182,9 +186,7 @@ CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -193,8 +195,8 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Admin', 'admin@admin.com', NULL, '$2y$10$fz3uiV9IY3M/HA8XZaPG6.dM4saBhQ023l2NuAN8LkB0/CUi6tIe2', NULL, '2021-06-01 08:51:10', '2021-06-01 08:51:10');
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `created_at`, `updated_at`) VALUES
+(1, 'Admin', 'admin@admin.com', '$2y$10$fz3uiV9IY3M/HA8XZaPG6.dM4saBhQ023l2NuAN8LkB0/CUi6tIe2', '2021-06-01 08:51:10', '2021-06-01 08:51:10');
 
 --
 -- Indexes for dumped tables
@@ -245,13 +247,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `data_testings`
 --
 ALTER TABLE `data_testings`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT for table `data_trainings`
 --
 ALTER TABLE `data_trainings`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
