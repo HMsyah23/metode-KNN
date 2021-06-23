@@ -3,14 +3,14 @@
 @section('title', 'Pisang Krispi Rendi')
 
 @section('content_header')
-    <h1>Data Training</h1>
+    <h1>Data Training <span class="badge badge-primary">{{count($dataT)}}</span></h1>
 @stop
 
 @section('content')
 <div class="card bg-white pl-3 pr-3 pt-3 pb-3">
     <div class="card-body">
         <div class="row text-center">
-            <h3> <i class="ion ion-android-people"></i> Data Training</h3> 
+            <h3> <i class="ion ion-android-people"></i> Data Training <sup class="badge badge-primary">{{count($dataT)}}</sup></h3> 
             <div class="col d-flex justify-content-end">
                 {{-- <button class="btn btn-primary rounded-pill" data-toggle="modal" data-target="#testingModal" data-backdrop="static"> <i class="fas fa-plus" style="font-size: 20px;"></i> <b style="font-size: 20px;">Tambah Data Testing </b></button> --}}
                 <button class="btn btn-success rounded-pill" data-toggle="modal" data-target="#addModal" data-backdrop="static"> <i class="fas fa-upload" style="font-size: 20px;"></i> <b style="font-size: 20px;">Upload Laporan </b></button>

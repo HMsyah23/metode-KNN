@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
+use App\User,App\DataTraining,App\DataTesting;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -14,7 +14,9 @@ class HomeController extends Controller
 
     public function index()
     {
-        return view('index');
+        $training = DataTraining::all();
+        $testing = DataTesting::all();
+        return view('index',compact('training','testing'));
     }
 
     public function penjelasan()
