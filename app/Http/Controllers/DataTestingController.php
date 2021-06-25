@@ -153,10 +153,9 @@ class DataTestingController extends Controller
 
         if ($dataTesting->cuaca == 1) {
             $cuaca = "cerah";
-        } else {
+        } elseif($dataTesting->cuaca == 2) {
             $cuaca = "hujan"; 
         }
-        
 
         DataTraining::create([
             'tanggal' => $dataTesting->tanggal,
