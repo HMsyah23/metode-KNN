@@ -74,7 +74,7 @@
                             <th> Tanggal </th>
                             <th> Hari </th>
                             <th> Cuaca </th>
-                            <th> Terjual </th>
+                            {{-- <th> Terjual </th> --}}
                             <th> Ranking </th>
                             <th> ED({{$dataED['tanggal']}},{{$dataED['hari']}},{{$dataED['cuaca']}}) </th>
                         </tr>
@@ -86,7 +86,7 @@
                                 <td>{{$d['tanggal']}}</td>
                                 <td>{{$d['hari']}}</td>
                                 <td>{{$d['cuaca']}}</td>
-                                <td>{{$d['terjual']}}</td>
+                                {{-- <td>{{$d['terjual']}}</td> --}}
                                 <td>{{$d['ranking']}}</td>
                                 <td>{{number_format($d['ed'],2)}}</td>
                             </tr>
@@ -128,7 +128,7 @@
                           <th> Tanggal </th>
                           <th> Hari </th>
                           <th> Cuaca </th>
-                          <th> Terjual </th>
+                          {{-- <th> Terjual </th> --}}
                           <th> Ranking </th>
                           <th> ED({{$dataED['tanggal']}},{{$dataED['hari']}},{{$dataED['cuaca']}})  </th>
                       </tr>
@@ -140,7 +140,7 @@
                               <td>{{$d['tanggal']}}</td>
                               <td>{{$d['hari']}}</td>
                               <td>{{$d['cuaca']}}</td>
-                              <td>{{$d['terjual']}}</td>
+                              {{-- <td>{{$d['terjual']}}</td> --}}
                               <td>{{$d['ranking']}}</td>
                               <td>{{number_format($d['ed'],2)}}</td>
                           </tr>
@@ -167,22 +167,30 @@
                   </table>
 
                   <h5 class="text-bold">Kesimpulan : </h5>
-                  <p class="alert alert-info text-justify">
-                      Maka diprediksi jumlah produksi Sanggar Kripsi Rendi pada hari <strong>{{$dT['hari']}}</strong>, tanggal <strong>{{$dT['tanggal']}}</strong> harus menyetok sanggar dalam jumlah
-                    <strong>
-                        @php $max = $sedikit  @endphp
-                        @if ($max > $sedang)
-                            Sedikit
-                        @else 
-                            @php $max = $sedang  @endphp
-                            @if($max > $banyak)
-                                Sedang                        
-                            @else
-                                Banyak
-                            @endif
-                        @endif
-                    </strong>
-                  </p>
+                  <div class="alert alert-info ">
+                    <p class="text-justify">
+                        Maka diprediksi jumlah produksi Sanggar Kripsi Rendi pada hari <strong>{{$dT['hari']}}</strong>, tanggal <strong>{{$dT['tanggal']}}</strong> dengan cuaca <strong>{{$dT['cuaca']}}</strong> disarankan membuat sanggar dalam jumlah
+                      <strong>
+                          @php $max = $sedikit  @endphp
+                          @if ($max > $sedang)
+                              Sedikit.
+                          @else 
+                              @php $max = $sedang  @endphp
+                              @if($max > $banyak)
+                                  Sedang.                        
+                              @else
+                                  Banyak.
+                              @endif
+                          @endif
+                      </strong>
+                      <p>Keterangan :</p>
+                      <ul>
+                          <li>Sedikit : 1  - 10 Kotak</li>
+                          <li>Sedang  : 11 - 20 Kotak</li>
+                          <li>Banyak  : 21 - 30 Kotak</li>
+                      </ul> 
+                    </p>
+                  </div>
               </div>
           </div>
     </div>
