@@ -139,7 +139,7 @@ class DataTestingController extends Controller
 
         $dataED->tanggal = $this->tanggal($dataED->tanggal);
 
-        return view('dataTesting.show',compact('dataS','dataS5','dataED','dT','sedikit','sedang','banyak'));
+        return redirect()->route('dataTestings.show',$dataTesting->id);
     }
 
     public function destroy($id){

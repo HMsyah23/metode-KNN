@@ -106,7 +106,7 @@
                           <th> Tanggal </th>
                           <th> Hari </th>
                           <th> Cuaca </th>
-                          <th> Terjual </th>
+                          {{-- <th> Terjual </th> --}}
                           <th> Ranking </th>
                       </tr>
                       </thead>
@@ -115,7 +115,7 @@
                               <td>{{$dT['tanggal']}}</td>
                               <td>{{$dT['hari']}}</td>
                               <td>{{$dT['cuaca']}}</td>
-                              <td>{{$dT['terjual']}}</td>
+                              {{-- <td>{{$dT['terjual']}}</td> --}}
                               <td>{{$dT['ranking']}}</td>
                           </tr>
                       </tbody>
@@ -154,7 +154,7 @@
                       <tr>
                           <th> Sedikit </th>
                           <th> Sedang </th>
-                          <th> Besar </th>
+                          <th> Banyak </th>
                       </tr>
                       </thead>
                       <tbody>
@@ -165,6 +165,24 @@
                           </tr>
                       </tbody>
                   </table>
+
+                  <h5 class="text-bold">Kesimpulan : </h5>
+                  <p class="alert alert-info text-justify">
+                      Maka diprediksi jumlah produksi Sanggar Kripsi Rendi pada hari <strong>{{$dT['hari']}}</strong>, tanggal <strong>{{$dT['tanggal']}}</strong> harus menyetok sanggar dalam jumlah
+                    <strong>
+                        @php $max = $sedikit  @endphp
+                        @if ($max > $sedang)
+                            Sedikit
+                        @else 
+                            @php $max = $sedang  @endphp
+                            @if($max > $banyak)
+                                Sedang                        
+                            @else
+                                Banyak
+                            @endif
+                        @endif
+                    </strong>
+                  </p>
               </div>
           </div>
     </div>
